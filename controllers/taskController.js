@@ -31,9 +31,10 @@ class MainController {
         })
     }
     async addTask(req , res){
-        if(req.body.task_id != null && req.body.task != null && req.body.category_id != null && req.body.priority_id != null && req.body.is_completed != null  && req.body.date_created != null  && req.body.due_date != null) {
+        console.log(req.body.id)
+        if(req.body.id != null && req.body.task != null && req.body.category_id != null && req.body.priority_id != null && req.body.is_completed != null  && req.body.date_created != null  && req.body.due_date != null) {
             let task = req.body;
-            var sql = `CALL SPAddTask('${task.task_id}','${task.task}','${task.category_id}','${task.priority_id}',${task.is_completed},'${task.date_created}','${task.due_date}')`
+            var sql = `CALL SPAddTask('${task.id}','${task.task}','${task.category_id}','${task.priority_id}',${task.is_completed},'${task.date_created}','${task.due_date}')`
             mysql.query(sql, (error,data,fields) => {
                 if(error) {
                     res.status(500)
@@ -52,9 +53,10 @@ class MainController {
         }
     }
     async updateTask(req, res){
-        if(req.params.task_id != null && req.body.task != null && req.body.category_id != null && req.body.priority_id != null && req.body.is_completed != null  && req.body.date_created != null  && req.body.due_date != null) {
+        console.log(req.params.id)
+        if(req.params.id != null && req.body.task != null && req.body.category_id != null && req.body.priority_id != null && req.body.is_completed != null  && req.body.date_created != null  && req.body.due_date != null) {
             let task = req.body;
-            var sql = `CALL SPUpdateTask('${req.params.task_id}','${task.task}','${task.category_id}','${task.priority_id}',${task.is_completed},'${task.date_created}','${task.due_date}')`
+            var sql = `CALL SPUpdateTask('${req.params.id}','${task.task}','${task.category_id}','${task.priority_id}',${task.is_completed},'${task.date_created}','${task.due_date}')`
             mysql.query(sql, (error,data,fields) => {
                 if(error) {
                     res.status(500)
@@ -72,8 +74,9 @@ class MainController {
           res.send('Por favor llena todos los datos!')
         }
     }
-    async deleteTask(req , res){
-        var sql = `CALL SPDeleteTask('${req.params.task_id}')`
+    async deleteTask(req ,res){
+        console.log(req.params.id)
+        var sql = `CALL SPDeleteTask('${req.params.id}')`
       mysql.query(sql,(error,data,fields) => {    
             if(error) {
                 res.status(500)
